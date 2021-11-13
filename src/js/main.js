@@ -134,7 +134,7 @@ window.addEventListener('DOMContentLoaded', function () {
 		}
 	});
 
-	const modalTimerId = setTimeout(openModal, 6000);
+	// const modalTimerId = setTimeout(openModal, 6000);
 
 	function showModalByScroll() {
 		if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
@@ -144,5 +144,69 @@ window.addEventListener('DOMContentLoaded', function () {
 	};
 
 	window.addEventListener('scroll', showModalByScroll);
+
+	//class for cards
+
+	class MenuCard {
+		constructor(src, alt, title, descr, price, parrentSelector) {
+			this.src = src;
+			this.alt = alt;
+			this.title = title;
+			this.descr = descr;
+			this.price = price;
+			this.parrent = document.querySelector(parrentSelector);
+			this.transfer = 75;
+			this.changeToRUB();
+
+		}
+
+		changeToRUB() {
+			this.price = +this.price * this.transfer;
+		}
+
+		render() {
+			const element = document.createElement('div');
+			element.innerHTML = `
+				<div class="menu__item">
+					<img src=${this.src} alt=${this.alt}>
+					<h3 class="menu__item-subtitle">${this.title}</h3>
+					<div class="menu__item-descr">${this.descr}</div>
+					<div class="menu__item-divider"></div>
+					<div class="menu__item-price">
+						<div class="menu__item-cost">Цена:</div>
+						<div class="menu__item-total"><span>${this.price}</span> руб/день</div>
+					</div>
+			</div>
+			`;
+			this.parrent.append(element);
+		}
+	};
+
+	new MenuCard(
+		"src/img/tabs/vegy.jpg",
+		"vegy",
+		'Меню "Фитнес"',
+		'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов.Продукт активных и здоровых людей.Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
+		9,
+		'.menu .container'
+	).render();
+
+	new MenuCard(
+		"src/img/tabs/elite.jpg",
+		"elite",
+		'Меню “Премиум”',
+		'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд.Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!',
+		18,
+		'.menu .container'
+	).render();
+
+	new MenuCard(
+		"src/img/tabs/post.jpg",
+		"post",
+		'Меню "Постное"',
+		'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие	продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.',
+		15,
+		'.menu .container'
+	).render();
 
 });
